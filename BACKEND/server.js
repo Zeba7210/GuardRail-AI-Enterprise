@@ -49,7 +49,6 @@ const hasSensitiveData=sensitiveKeywords.some(word=>prompt.toLowerCase().include
 if(hasSensitiveData){
     console.log(`[BLOCKED]: Security Breach Prevented by Regex Layer.`);
     
-    // 🚨 ZEBA'S FIX: Return hone se PEHLE hi database mein chori ka saboot likho!
     await new Log({
         userPrompt: prompt,
         status: "BLOCKED",
@@ -69,12 +68,12 @@ let triggerSource="AI Check";
 try{
     console.log(`[LOG]: Regex Layer Cleared. Forwarding to IBM Granite...`);
     const aiResponse=await Promise.race([
-        simulateIBMGraniteAPI(prompt),  // 👈 Ye aap hain (Jo 1.5 seconds mein jawab de dete hain)
-        new Promise((_,reject)=>setTimeout(()=>reject(new Error("Timeout")),4000)) // 👈 Ye teacher ka 4 seconds ka timer hai
+        simulateIBMGraniteAPI(prompt),  
+        new Promise((_,reject)=>setTimeout(()=>reject(new Error("Timeout")),4000)) 
     ]);
-    finalStatus=aiResponse; // Agar aapne pehle jawab de diya, toh wo status ban jayega
+    finalStatus=aiResponse; 
 }catch (error){
-    // 👈 Agar 4 seconds khatam ho gaye aur koi jawab nahi aaya, toh computer yahan kood jayega!
+   
     console.log(`[CRITICAL ALERT]: Activating Fail-Secure Lockdown.`);
     finalStatus="Blocked(fail-safe mode)";
     triggerSource="System Fallback Exception";
@@ -95,11 +94,11 @@ return res.status(200).json({
 });
 
 // ============================================================
-// 🟢 NEW ADMIN AUDIT API: GET ALL LOGS FROM MONGO (Sahi Jagah)
+// 🟢 NEW ADMIN AUDIT API: GET ALL LOGS FROM MONGO 
 // ============================================================
 app.get('/api/v1/logs', async (req, res) => {
     try {
-        // Database se saare logs nikalna aur naye logs ko sabse upar dikhana (sort by timestamp)
+       
         const allLogs = await Log.find().sort({ timestamp: -1 });
         return res.status(200).json(allLogs);
     } catch (error) {
@@ -117,7 +116,7 @@ async function simulateIBMGraniteAPI(prompt){
         const response=await axios.post(
             'https://api.groq.com/openai/v1/chat/completions',
             {
-                model:'llama-3.1-8b-instant', // Meta Llama 3 Ka Super-Fast Intelligent Model
+                model:'llama-3.1-8b-instant', // Meta Llama 3  Super-Fast Intelligent Model
                 messages:[
                     {
                     role:'system',
