@@ -6,9 +6,8 @@ function App() {
   const [prompt, setPrompt] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
-  const [logs, setLogs] = useState([]); // 👈 Live cloud logs store karne ka dibba
+  const [logs, setLogs] = useState([]); 
 
-  // 🌐 Database se saare logs live khinchne wala function
   const fetchLogs = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/v1/logs');
@@ -17,8 +16,6 @@ function App() {
       console.error("❌ Frontend Fetch Logs Error:", error.message);
     }
   };
-
-  // Page load hote hi logs automatic chalane ke liye useEffect
   useEffect(() => {
     fetchLogs();
   }, []);
@@ -33,7 +30,7 @@ function App() {
     try {
       const response = await axios.post('http://localhost:5000/api/v1/check', { prompt });
       setResult(response.data);
-      fetchLogs(); // 🚨 MAGIC: Naya test chalaney hi table ko instantly refresh kar do!
+      fetchLogs(); 
     } catch (error) {
       setResult({
         status: 'ERROR',
