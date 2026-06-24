@@ -6,6 +6,6 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins:[
     react(),
-    tailwindcss // 👈 Humne Tailwind ka plugin Vite engine mein jod diya!
+    tailwindcss 
   ],
 })
